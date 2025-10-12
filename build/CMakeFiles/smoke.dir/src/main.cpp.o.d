@@ -148,7 +148,14 @@ CMakeFiles/smoke.dir/src/main.cpp.o: /root/smoke-simulation/src/main.cpp \
  /usr/include/c++/13/bits/locale_facets.tcc \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
- /usr/include/c++/13/bits/istream.tcc \
+ /usr/include/c++/13/bits/istream.tcc /usr/include/unistd.h \
+ /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+ /usr/include/x86_64-linux-gnu/bits/environments.h \
+ /usr/include/x86_64-linux-gnu/bits/confname.h \
+ /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
+ /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
+ /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
+ /usr/include/linux/close_range.h \
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL.h \
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_stdinc.h \
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_platform_defines.h \
