@@ -1,0 +1,8 @@
+/root/smoke-simulation/build/CMakeFiles/smoke.dir
+/root/smoke-simulation/build/CMakeFiles/edit_cache.dir
+/root/smoke-simulation/build/CMakeFiles/rebuild_cache.dir
+/root/smoke-simulation/build/assets/SDL3/CMakeFiles/SDL3-shared.dir
+/root/smoke-simulation/build/assets/SDL3/CMakeFiles/SDL3_test.dir
+/root/smoke-simulation/build/assets/SDL3/CMakeFiles/SDL_uclibc.dir
+/root/smoke-simulation/build/assets/SDL3/CMakeFiles/edit_cache.dir
+/root/smoke-simulation/build/assets/SDL3/CMakeFiles/rebuild_cache.dir

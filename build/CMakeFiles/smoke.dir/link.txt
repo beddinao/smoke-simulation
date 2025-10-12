@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/smoke.dir/src/main.cpp.o -o smoke  -Wl,-rpath,/root/smoke-simulation/build libSDL3.so.0.2.24 
