@@ -12,26 +12,26 @@
 #define FPS		60
 #define NANOS_PER_SECOND 	0x3b9aca00
 #define NANOS_PER_FRAME	NANOS_PER_SECOND/FPS
-#define DEF_RECT_WIDTH	10
-#define DEF_RECT_HEIGHT	10
+#define DEF_RECT_WIDTH	50
+#define DEF_RECT_HEIGHT	50
 #define MAX_RECTS		0x64
 #define DEF_WIN_WIDTH	0x500
 #define DEF_WIN_HEIGHT	0x280
 #define MIN_WIN_WIDTH	0xc8
 #define MIN_WIN_HEIGHT	0x64
-#define ALPHA_INDX		2
-#define VELOCITY_X_INDX	0.01
-#define VELOCITY_Y_INDX	0.04
-#define SCALE_W_INDX	10
-#define SCALE_H_INDX	10
+#define ALPHA_INDX		3
+#define VELOCITY_X_INDX	0.005
+#define VELOCITY_Y_INDX	0.01
+#define SCALE_W_INDX	7
+#define SCALE_H_INDX	7
 #define RECT_MAX_WIDTH	DEF_WIN_WIDTH/3
 #define RECT_MAX_HEIGHT	DEF_WIN_WIDTH/3
-#define Y_FIX_VELOCITY	300
+#define Y_FIX_VELOCITY	8
 
 #define TEXTURE_PATH "assets/smoke_texture_2.png"
 
 typedef struct angle {
-	Uint16		angle;
+	int16_t		angle;
 	int8_t		dir;
 	int8_t		indx;
 } angle;

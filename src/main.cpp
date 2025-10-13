@@ -1,7 +1,12 @@
 #include <smoke.h>
 
 void *animation_routine(void *p) {
+	struct timespec frame_start_time, frame_end_time;
+	Uint64 elapsed_nanoseconds;
+	memset(&frame_start_time, 0, sizeof(frame_start_time));
+	memset(&frame_end_time, 0, sizeof(frame_end_time));
 	worker_data *worker = (worker_data*)p;
+	clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
 	for(;;) {
 		pthread_mutex_lock(&worker->halt_mutex);
 		if (worker->halt) {
@@ -9,10 +14,16 @@ void *animation_routine(void *p) {
 			return NULL;
 		}
 		pthread_mutex_unlock(&worker->halt_mutex);
+		clock_gettime(CLOCK_MONOTONIC, &frame_end_time);
+		elapsed_nanoseconds = (frame_end_time.tv_sec-frame_start_time.tv_sec) * NANOS_PER_SECOND
+			+ (frame_end_time.tv_nsec-frame_start_time.tv_nsec);
+		if (elapsed_nanoseconds < NANOS_PER_FRAME)
+			continue;
+		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
 		pthread_mutex_lock(&worker->data_mutex);
 		for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect++) {
 			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
-			worker->window->rects[current_rect].y -= worker->window->velosY[current_rect] -1;
+			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -Y_FIX_VELOCITY;
 			if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
 				worker->window->velosX[current_rect] -=
 					VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
@@ -66,7 +77,7 @@ void draw_routine(worker_data*worker) {
 						else break;
 						worker->window->angles[worker->window->rIndex].angle = random(0, 360);
 						worker->window->angles[worker->window->rIndex].dir = random(0, 1) ? 1 : -1;
-						worker->window->angles[worker->window->rIndex].indx = random(3, 6);
+						worker->window->angles[worker->window->rIndex].indx = random(1, 2);
 						worker->window->velosX[worker->window->rIndex] = event.motion.xrel;
 						worker->window->velosY[worker->window->rIndex] = event.motion.yrel;
 						worker->window->alphas[worker->window->rIndex] = random(0xf0, 0xff);
@@ -137,7 +148,7 @@ int main() {
 	win *window = (win*)malloc(sizeof(win));
 	if (!worker || !window) exit(1);
 	memset(worker, 0, sizeof(worker_data));
-	memset(window, 0, sizeof(window));
+	memset(window, 0, sizeof(win));
 	worker->window = window;
 	if (!init_window(worker)) exit(1);
 	pthread_mutex_init(&worker->halt_mutex, NULL);
