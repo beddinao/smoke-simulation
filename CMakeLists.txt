@@ -16,8 +16,10 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 add_subdirectory(assets/SDL3)
-
 target_link_libraries(${PROJECT_NAME} SDL3::SDL3)
+
+add_subdirectory(assets/SDL3_image)
+target_link_libraries(${PROJECT_NAME} SDL3_image::SDL3_image)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     INSTALL_RPATH_USE_LINK_PATH TRUE

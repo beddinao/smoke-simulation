@@ -23,6 +23,9 @@ ALSA_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libasound.so
 //Path to a library.
 ASOUND_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libasound.so
 
+//Build the library as a shared library
+BUILD_SHARED_LIBS:BOOL=ON
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -197,6 +200,9 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 
 //Path to a program.
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
+
+//Build static libraries with -fPIC
+CMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -397,6 +403,123 @@ SDL3_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 SDL3_SOURCE_DIR:STATIC=/root/smoke-simulation/assets/SDL3
+
+//Value Computed by CMake
+SDL3_image_BINARY_DIR:STATIC=/root/smoke-simulation/build/assets/SDL3_image
+
+//Value Computed by CMake
+SDL3_image_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+SDL3_image_SOURCE_DIR:STATIC=/root/smoke-simulation/assets/SDL3_image
+
+//Support loading AVIF images
+SDLIMAGE_AVIF:BOOL=ON
+
+//Add AVIF save support
+SDLIMAGE_AVIF_SAVE:BOOL=ON
+
+//Dynamically load AVIF support (requires shared libavif)
+SDLIMAGE_AVIF_SHARED:BOOL=ON
+
+//Use stb_image for loading JPEG and PNG files
+SDLIMAGE_BACKEND_STB:BOOL=ON
+
+//Support loading BMP images
+SDLIMAGE_BMP:BOOL=ON
+
+//Add BMP save support
+SDLIMAGE_BMP_SAVE:BOOL=ON
+
+//Load dependencies dynamically
+SDLIMAGE_DEPS_SHARED:BOOL=ON
+
+//Support loading GIF images
+SDLIMAGE_GIF:BOOL=ON
+
+//Add GIF save support
+SDLIMAGE_GIF_SAVE:BOOL=ON
+
+//Enable SDL3_image install target
+SDLIMAGE_INSTALL:BOOL=OFF
+
+//Support loading JPEG images
+SDLIMAGE_JPG:BOOL=ON
+
+//Add JPEG save support
+SDLIMAGE_JPG_SAVE:BOOL=ON
+
+//Support loading JXL images
+SDLIMAGE_JXL:BOOL=OFF
+
+//Support loading LBM images
+SDLIMAGE_LBM:BOOL=ON
+
+//Support loading PCX images
+SDLIMAGE_PCX:BOOL=ON
+
+//Support loading PNG images
+SDLIMAGE_PNG:BOOL=ON
+
+//Add PNG save support
+SDLIMAGE_PNG_SAVE:BOOL=ON
+
+//Support loading PNM images
+SDLIMAGE_PNM:BOOL=ON
+
+//Support loading QOI images
+SDLIMAGE_QOI:BOOL=ON
+
+//Build the SDL3_image sample program(s)
+SDLIMAGE_SAMPLES:BOOL=OFF
+
+//Fail when a dependency could not be found
+SDLIMAGE_STRICT:BOOL=OFF
+
+//Support loading SVG images
+SDLIMAGE_SVG:BOOL=ON
+
+//Build unit tests?
+SDLIMAGE_TESTS:BOOL=OFF
+
+//Install unit tests?
+SDLIMAGE_TESTS_INSTALL:BOOL=OFF
+
+//Support loading TGA images
+SDLIMAGE_TGA:BOOL=ON
+
+//Add TGA save support
+SDLIMAGE_TGA_SAVE:BOOL=ON
+
+//Support loading TIFF images
+SDLIMAGE_TIF:BOOL=ON
+
+//Dynamically load TIFF support (requires shared libtiff)
+SDLIMAGE_TIF_SHARED:BOOL=ON
+
+//Use vendored third-party libraries
+SDLIMAGE_VENDORED:BOOL=OFF
+
+//Support loading WEBP images
+SDLIMAGE_WEBP:BOOL=ON
+
+//Add WEBP save support
+SDLIMAGE_WEBP_SAVE:BOOL=ON
+
+//Dynamically load WEBP support (requires shared libwebp)
+SDLIMAGE_WEBP_SHARED:BOOL=ON
+
+//Treat warnings as errors
+SDLIMAGE_WERROR:BOOL=OFF
+
+//Support loading XCF images
+SDLIMAGE_XCF:BOOL=ON
+
+//Support loading XPM images
+SDLIMAGE_XPM:BOOL=ON
+
+//Support loading XV images
+SDLIMAGE_XV:BOOL=ON
 
 //Support the ALSA audio API
 SDL_ALSA:BOOL=ON
@@ -719,6 +842,18 @@ SDL_X11_XSYNC:BOOL=ON
 
 //Path to a library.
 SNDIO_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libsndio.so
+
+//The directory containing a CMake configuration file for TIFF.
+TIFF_DIR:PATH=TIFF_DIR-NOTFOUND
+
+//Path to a file.
+TIFF_INCLUDE_DIR:PATH=TIFF_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+TIFF_LIBRARY_DEBUG:FILEPATH=TIFF_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+TIFF_LIBRARY_RELEASE:FILEPATH=TIFF_LIBRARY_RELEASE-NOTFOUND
 
 //Path to a library.
 UDEV_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libudev.so
@@ -1155,6 +1290,9 @@ XRENDER_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libXrender.so
 //Path to a library.
 XSS_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libXss.so
 
+//The directory containing a CMake configuration file for libavif.
+libavif_DIR:PATH=libavif_DIR-NOTFOUND
+
 //Path to a library.
 pkgcfg_lib_DBUS_dbus-1:FILEPATH=/usr/lib/x86_64-linux-gnu/libdbus-1.so
 
@@ -1196,6 +1334,57 @@ smoke_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 smoke_SOURCE_DIR:STATIC=/root/smoke-simulation
+
+//The directory containing a CMake configuration file for tiff.
+tiff_DIR:PATH=tiff_DIR-NOTFOUND
+
+//Extra compile options of webp
+webp_COMPILE_OPTIONS:STRING=
+
+//The directory containing a CMake configuration file for webp.
+webp_DIR:PATH=webp_DIR-NOTFOUND
+
+//Path to a file.
+webp_INCLUDE_PATH:PATH=webp_INCLUDE_PATH-NOTFOUND
+
+//Path to a library.
+webp_LIBRARY:FILEPATH=webp_LIBRARY-NOTFOUND
+
+//Extra link flags of webp
+webp_LINK_FLAGS:STRING=
+
+//Extra link libraries of webp
+webp_LINK_LIBRARIES:STRING=
+
+//Extra compile options of webpdemux
+webpdemux_COMPILE_OPTIONS:STRING=
+
+//Path to a file.
+webpdemux_INCLUDE_PATH:PATH=webpdemux_INCLUDE_PATH-NOTFOUND
+
+//Path to a library.
+webpdemux_LIBRARY:FILEPATH=webpdemux_LIBRARY-NOTFOUND
+
+//Extra link flags of webpdemux
+webpdemux_LINK_FLAGS:STRING=
+
+//Extra link libraries of webpdemux
+webpdemux_LINK_LIBRARIES:STRING=
+
+//Extra compile options of webpmux
+webpmux_COMPILE_OPTIONS:STRING=
+
+//Path to a file.
+webpmux_INCLUDE_PATH:PATH=webpmux_INCLUDE_PATH-NOTFOUND
+
+//Path to a library.
+webpmux_LIBRARY:FILEPATH=webpmux_LIBRARY-NOTFOUND
+
+//Extra link flags of webpmux
+webpmux_LINK_FLAGS:STRING=
+
+//Extra link libraries of webpmux
+webpmux_LINK_LIBRARIES:STRING=
 
 
 ########################
@@ -1346,7 +1535,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1572,6 +1761,8 @@ HAVE_SYSCONF:INTERNAL=1
 HAVE_SYSCTLBYNAME:INTERNAL=
 //Have include sys/inotify.h
 HAVE_SYS_INOTIFY_H:INTERNAL=1
+//Test HAVE_WL_NO_UNDEFINED
+HAVE_WL_NO_UNDEFINED:INTERNAL=1
 //Test HAVE_XFIXES_H
 HAVE_XFIXES_H:INTERNAL=1
 //Test HAVE_XGENERICEVENT
@@ -2229,6 +2420,12 @@ SDL_CMAKE_C_COMPILER_LINKER_ID-ADVANCED:INTERNAL=1
 SDL_CPU_CHECK_ALL:INTERNAL=TRUE
 //Have symbol XkbLookupKeySym
 SDL_VIDEO_DRIVER_X11_HAS_XKBLOOKUPKEYSYM:INTERNAL=1
+//ADVANCED property for variable: TIFF_INCLUDE_DIR
+TIFF_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TIFF_LIBRARY_DEBUG
+TIFF_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TIFF_LIBRARY_RELEASE
+TIFF_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_ICE_INCLUDE_PATH
 X11_ICE_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_ICE_LIB

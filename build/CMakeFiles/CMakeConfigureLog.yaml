@@ -7928,3 +7928,45 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "assets/SDL3_image/cmake/PrivateSdlFunctions.cmake:247 (check_c_source_compiles)"
+      - "assets/SDL3_image/cmake/PrivateSdlFunctions.cmake:288 (sdl_check_linker_flag)"
+      - "assets/SDL3_image/CMakeLists.txt:364 (sdl_target_link_options_no_undefined)"
+    checks:
+      - "Performing Test HAVE_WL_NO_UNDEFINED"
+    directories:
+      source: "/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby"
+      binary: "/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/smoke-simulation/assets/SDL3_image/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_WL_NO_UNDEFINED"
+      cached: true
+      stdout: |
+        Change Dir: '/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a709c/fast
+        gmake[1]: Entering directory '/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a709c.dir/build.make CMakeFiles/cmTC_a709c.dir/build
+        gmake[2]: Entering directory '/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby'
+        Building C object CMakeFiles/cmTC_a709c.dir/src.c.o
+        /usr/bin/cc -DHAVE_WL_NO_UNDEFINED  -fPIE -o CMakeFiles/cmTC_a709c.dir/src.c.o -c /root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby/src.c
+        Linking C executable cmTC_a709c
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a709c.dir/link.txt --verbose=1
+        /usr/bin/cc -Wl,--no-undefined CMakeFiles/cmTC_a709c.dir/src.c.o -o cmTC_a709c 
+        gmake[2]: Leaving directory '/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby'
+        gmake[1]: Leaving directory '/root/smoke-simulation/build/CMakeFiles/CMakeScratch/TryCompile-fAHHby'
+        
+      exitCode: 0
+...

@@ -156,6 +156,7 @@ CMakeFiles/smoke.dir/src/main.cpp.o: /root/smoke-simulation/src/main.cpp \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
+ /root/smoke-simulation/assets/SDL3_image/include/SDL3_image/SDL_image.h \
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL.h \
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_stdinc.h \
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_platform_defines.h \

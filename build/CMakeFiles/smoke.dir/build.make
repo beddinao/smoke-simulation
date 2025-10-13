@@ -92,6 +92,7 @@ smoke_EXTERNAL_OBJECTS =
 
 smoke: CMakeFiles/smoke.dir/src/main.cpp.o
 smoke: CMakeFiles/smoke.dir/build.make
+smoke: libSDL3_image.so.0.3.0
 smoke: libSDL3.so.0.2.24
 smoke: /root/smoke-simulation/assets/SDL3/src/dynapi/SDL_dynapi.sym
 smoke: CMakeFiles/smoke.dir/link.txt

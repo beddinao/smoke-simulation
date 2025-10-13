@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/root/smoke-simulation/include -I/root/smoke-simulation/build/assets/SDL3/include-revision -I/root/smoke-simulation/assets/SDL3/include
+CXX_INCLUDES = -I/root/smoke-simulation/include -I/root/smoke-simulation/build/assets/SDL3/include-revision -I/root/smoke-simulation/assets/SDL3/include -I/root/smoke-simulation/assets/SDL3_image/include
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -std=gnu++17 -fPIE
 

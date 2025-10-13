@@ -24,6 +24,13 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/root/smoke-simulation/assets/SDL3/cmake/sdltargets.cmake"
   "/root/smoke-simulation/assets/SDL3/include/build_config/SDL_build_config.h.cmake"
   "/root/smoke-simulation/assets/SDL3/include/build_config/SDL_revision.h.cmake"
+  "/root/smoke-simulation/assets/SDL3_image/CMakeLists.txt"
+  "/root/smoke-simulation/assets/SDL3_image/cmake/Findwebp.cmake"
+  "/root/smoke-simulation/assets/SDL3_image/cmake/GetGitRevisionDescription.cmake"
+  "/root/smoke-simulation/assets/SDL3_image/cmake/PrivateSdlFunctions.cmake"
+  "/root/smoke-simulation/assets/SDL3_image/cmake/sdlcpu.cmake"
+  "/root/smoke-simulation/assets/SDL3_image/cmake/sdlmanpages.cmake"
+  "/root/smoke-simulation/assets/SDL3_image/cmake/sdlplatform.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
@@ -64,6 +71,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake"
   "/usr/share/cmake-3.28/Modules/FindPkgConfig.cmake"
+  "/usr/share/cmake-3.28/Modules/FindTIFF.cmake"
   "/usr/share/cmake-3.28/Modules/FindX11.cmake"
   "/usr/share/cmake-3.28/Modules/GNUInstallDirs.cmake"
   "/usr/share/cmake-3.28/Modules/Internal/CheckCompilerFlag.cmake"
@@ -77,6 +85,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/Linux.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake"
+  "/usr/share/cmake-3.28/Modules/SelectLibraryConfigurations.cmake"
   "/usr/share/cmake-3.28/Modules/WriteBasicConfigVersionFile.cmake"
   )
 
@@ -95,6 +104,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "assets/SDL3/SDL3ConfigVersion.cmake"
   "assets/SDL3/include-config-/build_config/SDL_build_config.h"
   "assets/SDL3/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "assets/SDL3_image/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -103,4 +113,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "assets/SDL3/CMakeFiles/SDL3-shared.dir/DependInfo.cmake"
   "assets/SDL3/CMakeFiles/SDL3_test.dir/DependInfo.cmake"
   "assets/SDL3/CMakeFiles/SDL_uclibc.dir/DependInfo.cmake"
+  "assets/SDL3_image/CMakeFiles/SDL3_image-shared.dir/DependInfo.cmake"
   )

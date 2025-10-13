@@ -62,6 +62,7 @@ CMakeFiles/smoke.dir/src/main.cpp.o
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_tray.h
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_version.h
  /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_video.h
+ /root/smoke-simulation/assets/SDL3_image/include/SDL3_image/SDL_image.h
  /root/smoke-simulation/include/smoke.h
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h

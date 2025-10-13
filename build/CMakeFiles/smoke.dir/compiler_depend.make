@@ -61,6 +61,7 @@ CMakeFiles/smoke.dir/src/main.cpp.o: /root/smoke-simulation/src/main.cpp \
   /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_tray.h \
   /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_version.h \
   /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_video.h \
+  /root/smoke-simulation/assets/SDL3_image/include/SDL3_image/SDL_image.h \
   /root/smoke-simulation/include/smoke.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -267,6 +268,8 @@ CMakeFiles/smoke.dir/src/main.cpp.o: /root/smoke-simulation/src/main.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
+/usr/include/x86_64-linux-gnu/sys/types.h:
+
 /usr/include/c++/13/cstdlib:
 
 /usr/include/c++/13/cstdio:
@@ -362,6 +365,8 @@ CMakeFiles/smoke.dir/src/main.cpp.o: /root/smoke-simulation/src/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/c++/13/bits/exception.h:
+
+/root/smoke-simulation/assets/SDL3_image/include/SDL3_image/SDL_image.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
@@ -532,8 +537,6 @@ CMakeFiles/smoke.dir/src/main.cpp.o: /root/smoke-simulation/src/main.cpp \
 /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_gpu.h:
 
 /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_sensor.h:
-
-/usr/include/x86_64-linux-gnu/sys/types.h:
 
 /root/smoke-simulation/assets/SDL3/include/SDL3/SDL_keyboard.h:
 
