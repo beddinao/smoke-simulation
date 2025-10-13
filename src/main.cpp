@@ -9,6 +9,10 @@ void *animation_routine(void *p) {
 			return NULL;
 		}
 		pthread_mutex_unlock(&worker->halt_mutex);
+		/*for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect) {
+			if (worker->window->alphas[current_rect] > ALPHA_INDX)
+				worker->window->alphas[current_rect] -= ALPHA_INDX;
+		}*/
 	}
 	return NULL;
 }
@@ -17,7 +21,6 @@ void draw_routine(worker_data*worker) {
 	struct timespec frame_start_time, frame_end_time;
 	Uint64 elapsed_nanoseconds;
 	SDL_Event event;
-	Uint32 rIndex(0);
 	clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
 	for (;;) {
 		if (SDL_PollEvent(&event)) {
@@ -28,14 +31,27 @@ void draw_routine(worker_data*worker) {
 					worker->halt = true;
 					pthread_mutex_unlock(&worker->halt_mutex);
 					return;
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+					worker->window->mouse_active = false; break;
 				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-					worker->window->alphas[rIndex] = 0xff;
-					worker->window->rects[rIndex].x = event.button.x-DEF_RECT_WIDTH/2;
-					worker->window->rects[rIndex].y = event.button.y-DEF_RECT_HEIGHT/2;
-					worker->window->rects[rIndex].w = DEF_RECT_WIDTH;
-					worker->window->rects[rIndex++].h = DEF_RECT_HEIGHT;
-					if (rIndex >= MAX_RECTS)
-						rIndex = 0;
+					worker->window->mouse_iter = 0;
+					worker->window->mouse_active = true;
+					break;
+				case SDL_EVENT_MOUSE_MOTION:
+					if (worker->window->mouse_active) {
+						worker->window->mouse_iter += 1;
+						if (worker->window->mouse_iter >= 10)
+							worker->window->mouse_iter = 0;
+						else break;
+						worker->window->velosX[worker->window->rIndex] = event.motion.xrel;
+						worker->window->velosY[worker->window->rIndex] = event.motion.yrel;
+						worker->window->alphas[worker->window->rIndex] = (rand() % 0xff) + 0xf0;
+						worker->window->rects[worker->window->rIndex].x = event.motion.x-DEF_RECT_WIDTH/2;
+						worker->window->rects[worker->window->rIndex].y = event.motion.y-DEF_RECT_HEIGHT/2;
+						worker->window->rects[worker->window->rIndex].w = DEF_RECT_WIDTH;
+						worker->window->rects[worker->window->rIndex++].h = DEF_RECT_HEIGHT;
+						if (worker->window->rIndex >= MAX_RECTS) worker->window->rIndex = 0;
+					}
 					break;
 				default: break;
 			}
@@ -50,17 +66,27 @@ void draw_routine(worker_data*worker) {
 				(BGC>>24)&0xff,(BGC>>16)&0xff,
 				(BGC>>8)&0xff,BGC&0xff);
 		SDL_RenderClear(worker->window->renderer);
-		/*SDL_SetRenderDrawColor(worker->window->renderer,
-				(FGC>>24)&0xff,(FGC>>16)&0xff,
-				(FGC>>8)&0xff,FGC&0xff);
-		SDL_RenderFillRects(worker->window->renderer, worker->window->rects, rIndex);
-		SDL_SetRenderDrawColor(worker->window->renderer,
-				(BRC>>24)&0xff,(BRC>>16)&0xff,
-				(BRC>>8)&0xff,BRC&0xff);
-		SDL_RenderRects(worker->window->renderer, worker->window->rects, rIndex);*/
-		for (Uint32 current_rect = 0; current_rect < rIndex; current_rect++)
+		for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect++) {
+			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
+			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -1;
+			if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
+				worker->window->velosX[current_rect] -=
+					VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
+			else worker->window->velosX[current_rect] = 0;
+			if (abs(worker->window->velosY[current_rect]) >= VELOCITY_Y_INDX)
+				worker->window->velosY[current_rect] -=
+					VELOCITY_Y_INDX*(worker->window->velosY[current_rect]>0?1:-1);
+			else worker->window->velosY[current_rect] = 0;
+			if (worker->window->rects[current_rect].w<=RECT_MAX_WIDTH)
+				worker->window->rects[current_rect].w += SCALE_W_INDX;
+			if (worker->window->rects[current_rect].h<=RECT_MAX_HEIGHT)
+				worker->window->rects[current_rect].h += SCALE_H_INDX;
+			SDL_SetTextureAlphaMod(worker->window->texture, worker->window->alphas[current_rect]);
+			if (worker->window->alphas[current_rect] >= ALPHA_INDX)
+				worker->window->alphas[current_rect] -= ALPHA_INDX;
 			SDL_RenderTexture(worker->window->renderer, worker->window->texture,
 					NULL, &worker->window->rects[current_rect]);
+		}
 		SDL_RenderPresent(worker->window->renderer);
 	}
 }
@@ -81,9 +107,11 @@ bool init_window(worker_data *worker) {
 	SDL_SetWindowMinimumSize(sdl_win,
 			MIN_WIN_WIDTH,
 			MIN_WIN_HEIGHT);
+	SDL_SetRenderDrawBlendMode(worker->window->renderer, SDL_BLENDMODE_BLEND);	
 	SDL_Surface *surface = IMG_Load(TEXTURE_PATH);
 	if (!surface || !(worker->window->texture = SDL_CreateTextureFromSurface(
 			renderer, surface))) exit(1);
+	SDL_SetTextureBlendMode(worker->window->texture, SDL_BLENDMODE_BLEND);
 	window->window = sdl_win;
 	window->renderer = renderer;
 	SDL_DestroySurface(surface);
