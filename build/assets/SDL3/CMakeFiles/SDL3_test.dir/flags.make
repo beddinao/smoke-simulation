@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/root/smoke-simulation/build/assets/SDL3/include-revision -I/root/smoke-simulation/assets/SDL3/include
 
-C_FLAGS = -fPIC -Wall -Wundef -Wfloat-conversion -fno-strict-aliasing -Wshadow -Wno-unused-local-typedefs -Wimplicit-fallthrough -fdiagnostics-color=always
+C_FLAGS = -Wall -Wundef -Wfloat-conversion -fno-strict-aliasing -Wshadow -Wno-unused-local-typedefs -Wimplicit-fallthrough -fdiagnostics-color=always
 

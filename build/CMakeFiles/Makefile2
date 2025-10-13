@@ -117,8 +117,8 @@ assets/SDL3_image/clean: assets/SDL3_image/CMakeFiles/SDL3_image-shared.dir/clea
 # Target rules for target CMakeFiles/smoke.dir
 
 # All Build rule for target.
-CMakeFiles/smoke.dir/all: assets/SDL3/CMakeFiles/SDL3-shared.dir/all
 CMakeFiles/smoke.dir/all: assets/SDL3_image/CMakeFiles/SDL3_image-shared.dir/all
+CMakeFiles/smoke.dir/all: assets/SDL3/CMakeFiles/SDL3-shared.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/smoke.dir/build.make CMakeFiles/smoke.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/smoke.dir/build.make CMakeFiles/smoke.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/root/smoke-simulation/build/CMakeFiles --progress-num=100 "Built target smoke"

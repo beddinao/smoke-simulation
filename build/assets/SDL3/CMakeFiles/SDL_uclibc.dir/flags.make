@@ -6,5 +6,5 @@ C_DEFINES = -DUSING_GENERATED_CONFIG_H
 
 C_INCLUDES = -I/root/smoke-simulation/build/assets/SDL3/include-config-/build_config -I/root/smoke-simulation/assets/SDL3/src -I/root/smoke-simulation/assets/SDL3/include
 
-C_FLAGS = -fPIC -fvisibility=hidden -Wall -Wundef -Wfloat-conversion -fno-strict-aliasing -Wshadow -Wno-unused-local-typedefs -Wimplicit-fallthrough -fdiagnostics-color=always
+C_FLAGS = -fvisibility=hidden -Wall -Wundef -Wfloat-conversion -fno-strict-aliasing -Wshadow -Wno-unused-local-typedefs -Wimplicit-fallthrough -fdiagnostics-color=always
 

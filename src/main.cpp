@@ -9,13 +9,34 @@ void *animation_routine(void *p) {
 			return NULL;
 		}
 		pthread_mutex_unlock(&worker->halt_mutex);
-		/*for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect) {
-			if (worker->window->alphas[current_rect] > ALPHA_INDX)
+		pthread_mutex_lock(&worker->data_mutex);
+		for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect++) {
+			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
+			worker->window->rects[current_rect].y -= worker->window->velosY[current_rect] -1;
+			if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
+				worker->window->velosX[current_rect] -=
+					VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
+			else	worker->window->velosX[current_rect] = 0;
+			if (abs(worker->window->velosY[current_rect]) >= VELOCITY_Y_INDX)
+				worker->window->velosY[current_rect] -=
+					VELOCITY_Y_INDX*(worker->window->velosY[current_rect]>0?1:-1);
+			else	worker->window->velosY[current_rect] = 0;
+			if (worker->window->rects[current_rect].w<=RECT_MAX_WIDTH)
+				worker->window->rects[current_rect].w += SCALE_W_INDX;
+			if (worker->window->rects[current_rect].h<=RECT_MAX_HEIGHT)
+				worker->window->rects[current_rect].h += SCALE_H_INDX;
+			if (worker->window->alphas[current_rect] >= ALPHA_INDX)
 				worker->window->alphas[current_rect] -= ALPHA_INDX;
-		}*/
+			worker->window->angles[current_rect].angle += worker->window->angles[current_rect].indx
+				* worker->window->angles[current_rect].dir;
+			worker->window->angles[current_rect].angle %= 360;
+		}
+		pthread_mutex_unlock(&worker->data_mutex);
 	}
 	return NULL;
 }
+
+int16_t random(int16_t min, int16_t max) { return (rand() % (max - min + 1)) + min; }
 
 void draw_routine(worker_data*worker) {
 	struct timespec frame_start_time, frame_end_time;
@@ -26,7 +47,7 @@ void draw_routine(worker_data*worker) {
 		if (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_EVENT_QUIT:
-					std::cout << "SDL_QUIT success" << std::endl;
+					std::cout << "SDL_Quit success" << std::endl;
 					pthread_mutex_lock(&worker->halt_mutex);
 					worker->halt = true;
 					pthread_mutex_unlock(&worker->halt_mutex);
@@ -43,14 +64,20 @@ void draw_routine(worker_data*worker) {
 						if (worker->window->mouse_iter >= 10)
 							worker->window->mouse_iter = 0;
 						else break;
+						worker->window->angles[worker->window->rIndex].angle = random(0, 360);
+						worker->window->angles[worker->window->rIndex].dir = random(0, 1) ? 1 : -1;
+						worker->window->angles[worker->window->rIndex].indx = random(3, 6);
 						worker->window->velosX[worker->window->rIndex] = event.motion.xrel;
 						worker->window->velosY[worker->window->rIndex] = event.motion.yrel;
-						worker->window->alphas[worker->window->rIndex] = (rand() % 0xff) + 0xf0;
+						worker->window->alphas[worker->window->rIndex] = random(0xf0, 0xff);
 						worker->window->rects[worker->window->rIndex].x = event.motion.x-DEF_RECT_WIDTH/2;
 						worker->window->rects[worker->window->rIndex].y = event.motion.y-DEF_RECT_HEIGHT/2;
-						worker->window->rects[worker->window->rIndex].w = DEF_RECT_WIDTH;
-						worker->window->rects[worker->window->rIndex++].h = DEF_RECT_HEIGHT;
+						worker->window->rects[worker->window->rIndex].w = random(DEF_RECT_WIDTH-10,DEF_RECT_WIDTH);
+						worker->window->rects[worker->window->rIndex].h = random(DEF_RECT_HEIGHT-10,DEF_RECT_HEIGHT);
+						pthread_mutex_lock(&worker->data_mutex);
+						worker->window->rIndex += 1;
 						if (worker->window->rIndex >= MAX_RECTS) worker->window->rIndex = 0;
+						pthread_mutex_unlock(&worker->data_mutex);
 					}
 					break;
 				default: break;
@@ -66,27 +93,13 @@ void draw_routine(worker_data*worker) {
 				(BGC>>24)&0xff,(BGC>>16)&0xff,
 				(BGC>>8)&0xff,BGC&0xff);
 		SDL_RenderClear(worker->window->renderer);
+		pthread_mutex_lock(&worker->data_mutex);
 		for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect++) {
-			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
-			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -1;
-			if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
-				worker->window->velosX[current_rect] -=
-					VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
-			else worker->window->velosX[current_rect] = 0;
-			if (abs(worker->window->velosY[current_rect]) >= VELOCITY_Y_INDX)
-				worker->window->velosY[current_rect] -=
-					VELOCITY_Y_INDX*(worker->window->velosY[current_rect]>0?1:-1);
-			else worker->window->velosY[current_rect] = 0;
-			if (worker->window->rects[current_rect].w<=RECT_MAX_WIDTH)
-				worker->window->rects[current_rect].w += SCALE_W_INDX;
-			if (worker->window->rects[current_rect].h<=RECT_MAX_HEIGHT)
-				worker->window->rects[current_rect].h += SCALE_H_INDX;
 			SDL_SetTextureAlphaMod(worker->window->texture, worker->window->alphas[current_rect]);
-			if (worker->window->alphas[current_rect] >= ALPHA_INDX)
-				worker->window->alphas[current_rect] -= ALPHA_INDX;
-			SDL_RenderTexture(worker->window->renderer, worker->window->texture,
-					NULL, &worker->window->rects[current_rect]);
+			SDL_RenderTextureRotated(worker->window->renderer, worker->window->texture,
+			NULL, &worker->window->rects[current_rect], worker->window->angles[current_rect].angle, NULL, SDL_FLIP_NONE);
 		}
+		pthread_mutex_unlock(&worker->data_mutex);
 		SDL_RenderPresent(worker->window->renderer);
 	}
 }
@@ -128,10 +141,14 @@ int main() {
 	worker->window = window;
 	if (!init_window(worker)) exit(1);
 	pthread_mutex_init(&worker->halt_mutex, NULL);
+	pthread_mutex_init(&worker->data_mutex, NULL);
+	pthread_mutex_init(&worker->indx_mutex, NULL);
 	pthread_create(&worker->worker, NULL, animation_routine, worker);
 	draw_routine(worker);
 	pthread_join(worker->worker, NULL);
 	pthread_mutex_destroy(&worker->halt_mutex);
+	pthread_mutex_destroy(&worker->data_mutex);
+	pthread_mutex_destroy(&worker->indx_mutex);
 	SDL_DestroyTexture(worker->window->texture);
 	SDL_DestroyRenderer(worker->window->renderer);
 	SDL_DestroyWindow(worker->window->window);
