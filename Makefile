@@ -1,8 +1,5 @@
 all: 
-	rm -rf smoke
-	@cmake -B build
-	@cmake --build build
-	@mv build/smoke .
+	@mkdir -p build && cd build && emcmake cmake .. && emmake make -j20
 
 clean:
-	rm -fr build smoke
+	rm -fr build
