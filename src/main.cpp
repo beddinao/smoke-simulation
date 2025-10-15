@@ -17,25 +17,26 @@ void *animation_routine(void *p) {
 		clock_gettime(CLOCK_MONOTONIC, &frame_end_time);
 		elapsed_nanoseconds = (frame_end_time.tv_sec-frame_start_time.tv_sec) * NANOS_PER_SECOND
 			+ (frame_end_time.tv_nsec-frame_start_time.tv_nsec);
-		if (elapsed_nanoseconds < NANOS_PER_FRAME)
-			continue;
+		if (elapsed_nanoseconds < NANOS_PER_FRAME) continue;
 		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
 		pthread_mutex_lock(&worker->data_mutex);
-		for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect++) {
-			//worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
+		for (Uint32 current_rect = 0; current_rect < worker->window->cur_rects; current_rect++) {
+			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
 			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -Y_FIX_VELOCITY;
-			/*if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
-				worker->window->velosX[current_rect] -=
-					VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
-			else	worker->window->velosX[current_rect] = 0;*/
+			if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
+				worker->window->velosX[current_rect] -= VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
+			else	worker->window->velosX[current_rect] = 0;
 			if (abs(worker->window->velosY[current_rect]) >= VELOCITY_Y_INDX)
-				worker->window->velosY[current_rect] -=
-					VELOCITY_Y_INDX*(worker->window->velosY[current_rect]>0?1:-1);
+				worker->window->velosY[current_rect] -= VELOCITY_Y_INDX*(worker->window->velosY[current_rect]>0?1:-1);
 			else	worker->window->velosY[current_rect] = 0;
-			if (worker->window->rects[current_rect].w<=RECT_MAX_WIDTH)
+			if (worker->window->rects[current_rect].w<=RECT_MAX_WIDTH) {
 				worker->window->rects[current_rect].w += worker->window->meta[current_rect].scale_x;
-			if (worker->window->rects[current_rect].h<=RECT_MAX_HEIGHT)
+				worker->window->rects[current_rect].x -= worker->window->meta[current_rect].scale_x/2;
+			}
+			if (worker->window->rects[current_rect].h<=RECT_MAX_HEIGHT) {
 				worker->window->rects[current_rect].h += worker->window->meta[current_rect].scale_y;
+				worker->window->rects[current_rect].y -= worker->window->meta[current_rect].scale_y/2;
+			}
 			if (worker->window->alphas[current_rect] >= worker->window->meta[current_rect].alpha_indx)
 				worker->window->alphas[current_rect] -= worker->window->meta[current_rect].alpha_indx;
 			worker->window->meta[current_rect].angle += worker->window->meta[current_rect].indx
@@ -66,31 +67,27 @@ void draw_routine(worker_data*worker) {
 				case SDL_EVENT_MOUSE_BUTTON_UP:
 					worker->window->mouse_active = false; break;
 				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-					//worker->window->mouse_iter = 0;
 					worker->window->mouse_active = true;
 					break;
 				case SDL_EVENT_MOUSE_MOTION:
 					if (worker->window->mouse_active) {
-						/*worker->window->mouse_iter += 1;
-						if (worker->window->mouse_iter >= 1)
-							worker->window->mouse_iter = 0;
-						else break;*/
 						worker->window->meta[worker->window->rIndex].angle = random(0, 360);
 						worker->window->meta[worker->window->rIndex].dir = random(0, 1) ? 1 : -1;
 						worker->window->meta[worker->window->rIndex].indx = random(1, 2);
 						worker->window->meta[worker->window->rIndex].scale_x = random(MIN_SCALE_X_INDX, MAX_SCALE_X_INDX);
 						worker->window->meta[worker->window->rIndex].scale_y = worker->window->meta[worker->window->rIndex].scale_x;
 						worker->window->meta[worker->window->rIndex].alpha_indx = random(MIN_ALPHA_INDX, MAX_ALPHA_INDX);
-						worker->window->velosX[worker->window->rIndex] = event.motion.xrel;
-						worker->window->velosY[worker->window->rIndex] = event.motion.yrel;
+						worker->window->velosX[worker->window->rIndex] = random(0, 10);
+						worker->window->velosY[worker->window->rIndex] = random(0, 10);
 						worker->window->alphas[worker->window->rIndex] = random(0x64, 0xff);
-						worker->window->rects[worker->window->rIndex].x = event.motion.x-DEF_RECT_WIDTH/2;
-						worker->window->rects[worker->window->rIndex].y = event.motion.y-DEF_RECT_HEIGHT/2;
 						worker->window->rects[worker->window->rIndex].w = random(DEF_RECT_WIDTH-10,DEF_RECT_WIDTH);
 						worker->window->rects[worker->window->rIndex].h = random(DEF_RECT_HEIGHT-10,DEF_RECT_HEIGHT);
+						worker->window->rects[worker->window->rIndex].x = event.motion.x-worker->window->rects[worker->window->rIndex].w/2;
+						worker->window->rects[worker->window->rIndex].y = event.motion.y-worker->window->rects[worker->window->rIndex].h/2;
 						pthread_mutex_lock(&worker->data_mutex);
-						worker->window->rIndex += 1;
+						worker->window->rIndex++;
 						if (worker->window->rIndex >= MAX_RECTS) worker->window->rIndex = 0;
+						if (worker->window->cur_rects < MAX_RECTS) worker->window->cur_rects++;
 						pthread_mutex_unlock(&worker->data_mutex);
 					}
 					break;
@@ -108,7 +105,7 @@ void draw_routine(worker_data*worker) {
 				(BGC>>8)&0xff,BGC&0xff);
 		SDL_RenderClear(worker->window->renderer);
 		pthread_mutex_lock(&worker->data_mutex);
-		for (Uint32 current_rect = 0; current_rect < worker->window->rIndex; current_rect++) {
+		for (Uint32 current_rect = 0; current_rect < worker->window->cur_rects; current_rect++) {
 			SDL_SetTextureAlphaMod(worker->window->texture, worker->window->alphas[current_rect]);
 			SDL_RenderTextureRotated(worker->window->renderer, worker->window->texture,
 			NULL, &worker->window->rects[current_rect], worker->window->meta[current_rect].angle, NULL, SDL_FLIP_NONE);
