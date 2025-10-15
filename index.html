@@ -16,5 +16,32 @@
 				<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 			</div>
 			<script async type="text/javascript" src="./assets/smoke.js"></script>
+			<script async type="text/javascript">
+				var Module = {
+					print(...args) {
+						console.log(args);
+					},
+					onRuntimeInitialized: function() {
+						const load_texture_web = Module.cwrap('load_texture_web', null, ['array', 'number']);
+						const req = new XMLHttpRequest();
+						req.open("GET", "assets/smoke_texture.png", true);
+						req.responseType = "arraybuffer";
+						req.onload = e => {
+							if (e.target.status == 200) {
+								console.log("png retrieved success");
+								const arrayBuffer = req.response;
+								if (arrayBuffer) {
+									console.log("array buffer: ", arrayBuffer);
+									const byte_array = new Uint8Array(arrayBuffer);
+									console.log("byte array: ", byte_array);
+									load_texture_web(byte_array, byte_array.length);
+								}
+							}
+							else console.log("failed to retrieve png file");
+						}
+						req.send();
+					}
+				}
+			</script>
 		</body>
 </html>
