@@ -8,9 +8,9 @@ void *animation_routine(void *p) {
 	memset(&frame_start_time, 0, sizeof(frame_start_time));
 	memset(&frame_end_time, 0, sizeof(frame_end_time));*/
 	worker_data *worker = (worker_data*)p;
-	//clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
-	//for(;;) {
-		/*pthread_mutex_lock(&worker->halt_mutex);
+	/*clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
+	for(;;) {
+		pthread_mutex_lock(&worker->halt_mutex);
 		if (worker->halt) {
 			pthread_mutex_unlock(&worker->halt_mutex);
 			return NULL;
@@ -20,8 +20,8 @@ void *animation_routine(void *p) {
 		elapsed_nanoseconds = (frame_end_time.tv_sec-frame_start_time.tv_sec) * NANOS_PER_SECOND
 			+ (frame_end_time.tv_nsec-frame_start_time.tv_nsec);
 		if (elapsed_nanoseconds < NANOS_PER_FRAME) return NULL;
-		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
-		pthread_mutex_lock(&worker->data_mutex);*/
+		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);*/
+		//pthread_mutex_lock(&worker->data_mutex);
 		for (Uint32 current_rect = 0; current_rect < worker->window->cur_rects; current_rect++) {
 			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
 			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -Y_FIX_VELOCITY;
@@ -54,12 +54,15 @@ int16_t a_random(int16_t min, int16_t max) { return (rand() % (max - min + 1)) +
 
 void draw_routine(void *p) {
 	worker_data *worker = (worker_data*)p;
+	if (worker->window->texture == NULL)
+		return;
 	struct timespec frame_start_time, frame_end_time;
 	Uint64 elapsed_nanoseconds;
 	SDL_Event event;
 	clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
 	//for (;;) {
 		animation_routine(p);
+	while (1) {
 		if (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_EVENT_QUIT:
@@ -102,8 +105,10 @@ void draw_routine(void *p) {
 		elapsed_nanoseconds = (frame_end_time.tv_sec-frame_start_time.tv_sec) * NANOS_PER_SECOND
 			+ (frame_end_time.tv_nsec-frame_start_time.tv_nsec);
 		if (elapsed_nanoseconds < NANOS_PER_FRAME)
-			return;
-		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
+			continue;
+		clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
+		break;
+	}
 		SDL_SetRenderDrawColor(worker->window->renderer,
 				(BGC>>24)&0xff,(BGC>>16)&0xff,
 				(BGC>>8)&0xff,BGC&0xff);
@@ -138,8 +143,8 @@ bool init_window(worker_data *worker) {
 	SDL_SetRenderDrawBlendMode(worker->window->renderer, SDL_BLENDMODE_BLEND);
 	window->window = sdl_win;
 	window->renderer = renderer;
-	if (!load_texture(worker))
-		exit(1);
+	/*if (!load_texture(worker))
+		exit(1);*/
 	return 1;
 }
 

@@ -18,7 +18,7 @@ sdl:
 	@cp -r $(SDL_IMAGE_PATH)/build/libSDL3_image* lib
 
 $(NAME): $(OBJ)
-	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS) -O3 -sALLOW_MEMORY_GROWTH=1 -sEXPORTED_RUNTIME_METHODS=ccall,cwrap -sEXPORTED_FUNCTIONS=_load_texture_web,_draw_routine,_main
+	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS) -O3 -sALLOW_MEMORY_GROWTH=1 -sEXPORTED_RUNTIME_METHODS=ccall,cwrap -sEXPORTED_FUNCTIONS=_load_texture_web,_draw_routine,_main -sTOTAL_STACK=64MB
 
 build/%.o: src/%.c $(HR)
 	@mkdir -p $(dir $@)
