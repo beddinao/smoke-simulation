@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
+#include <emscripten/emscripten.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3/SDL.h>
 

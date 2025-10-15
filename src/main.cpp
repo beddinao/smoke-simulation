@@ -1,14 +1,16 @@
 #include <smoke.h>
 
+worker_data* worker;
+
 void *animation_routine(void *p) {
-	struct timespec frame_start_time, frame_end_time;
+	/*struct timespec frame_start_time, frame_end_time;
 	Uint64 elapsed_nanoseconds;
 	memset(&frame_start_time, 0, sizeof(frame_start_time));
-	memset(&frame_end_time, 0, sizeof(frame_end_time));
+	memset(&frame_end_time, 0, sizeof(frame_end_time));*/
 	worker_data *worker = (worker_data*)p;
-	clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
-	for(;;) {
-		pthread_mutex_lock(&worker->halt_mutex);
+	//clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
+	//for(;;) {
+		/*pthread_mutex_lock(&worker->halt_mutex);
 		if (worker->halt) {
 			pthread_mutex_unlock(&worker->halt_mutex);
 			return NULL;
@@ -17,9 +19,9 @@ void *animation_routine(void *p) {
 		clock_gettime(CLOCK_MONOTONIC, &frame_end_time);
 		elapsed_nanoseconds = (frame_end_time.tv_sec-frame_start_time.tv_sec) * NANOS_PER_SECOND
 			+ (frame_end_time.tv_nsec-frame_start_time.tv_nsec);
-		if (elapsed_nanoseconds < NANOS_PER_FRAME) continue;
+		if (elapsed_nanoseconds < NANOS_PER_FRAME) return NULL;
 		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
-		pthread_mutex_lock(&worker->data_mutex);
+		pthread_mutex_lock(&worker->data_mutex);*/
 		for (Uint32 current_rect = 0; current_rect < worker->window->cur_rects; current_rect++) {
 			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
 			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -Y_FIX_VELOCITY;
@@ -43,26 +45,29 @@ void *animation_routine(void *p) {
 				* worker->window->meta[current_rect].dir;
 			worker->window->meta[current_rect].angle %= 360;
 		}
-		pthread_mutex_unlock(&worker->data_mutex);
-	}
+		//pthread_mutex_unlock(&worker->data_mutex);
+	//}
 	return NULL;
 }
 
 int16_t random(int16_t min, int16_t max) { return (rand() % (max - min + 1)) + min; }
 
-void draw_routine(worker_data*worker) {
+EMSCRIPTEN_KEEPALIVE
+void draw_routine(void *p) {
+	worker_data *worker = (worker_data*)p;
 	struct timespec frame_start_time, frame_end_time;
 	Uint64 elapsed_nanoseconds;
 	SDL_Event event;
 	clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
-	for (;;) {
+	//for (;;) {
+		animation_routine(p);
 		if (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_EVENT_QUIT:
 					std::cout << "SDL_Quit success" << std::endl;
-					pthread_mutex_lock(&worker->halt_mutex);
+					/*pthread_mutex_lock(&worker->halt_mutex);
 					worker->halt = true;
-					pthread_mutex_unlock(&worker->halt_mutex);
+					pthread_mutex_unlock(&worker->halt_mutex);*/
 					return;
 				case SDL_EVENT_MOUSE_BUTTON_UP:
 					worker->window->mouse_active = false; break;
@@ -84,11 +89,12 @@ void draw_routine(worker_data*worker) {
 						worker->window->rects[worker->window->rIndex].h = random(DEF_RECT_HEIGHT-10,DEF_RECT_HEIGHT);
 						worker->window->rects[worker->window->rIndex].x = event.motion.x-worker->window->rects[worker->window->rIndex].w/2;
 						worker->window->rects[worker->window->rIndex].y = event.motion.y-worker->window->rects[worker->window->rIndex].h/2;
-						pthread_mutex_lock(&worker->data_mutex);
+						//pthread_mutex_lock(&worker->data_mutex);
 						worker->window->rIndex++;
 						if (worker->window->rIndex >= MAX_RECTS) worker->window->rIndex = 0;
 						if (worker->window->cur_rects < MAX_RECTS) worker->window->cur_rects++;
-						pthread_mutex_unlock(&worker->data_mutex);
+						//pthread_mutex_unlock(&worker->data_mutex);
+						std::cout << "new rect created at: " << event.motion.x << ":" << event.motion.y << std::endl;
 					}
 					break;
 				default: break;
@@ -98,21 +104,21 @@ void draw_routine(worker_data*worker) {
 		elapsed_nanoseconds = (frame_end_time.tv_sec-frame_start_time.tv_sec) * NANOS_PER_SECOND
 			+ (frame_end_time.tv_nsec-frame_start_time.tv_nsec);
 		if (elapsed_nanoseconds < NANOS_PER_FRAME)
-			continue;
+			return;
 		else clock_gettime(CLOCK_MONOTONIC, &frame_start_time);
 		SDL_SetRenderDrawColor(worker->window->renderer,
 				(BGC>>24)&0xff,(BGC>>16)&0xff,
 				(BGC>>8)&0xff,BGC&0xff);
 		SDL_RenderClear(worker->window->renderer);
-		pthread_mutex_lock(&worker->data_mutex);
+		//pthread_mutex_lock(&worker->data_mutex);
 		for (Uint32 current_rect = 0; current_rect < worker->window->cur_rects; current_rect++) {
 			SDL_SetTextureAlphaMod(worker->window->texture, worker->window->alphas[current_rect]);
 			SDL_RenderTextureRotated(worker->window->renderer, worker->window->texture,
 			NULL, &worker->window->rects[current_rect], worker->window->meta[current_rect].angle, NULL, SDL_FLIP_NONE);
 		}
-		pthread_mutex_unlock(&worker->data_mutex);
+		//pthread_mutex_unlock(&worker->data_mutex);
 		SDL_RenderPresent(worker->window->renderer);
-	}
+	//}
 }
 
 bool init_window(worker_data *worker) {
@@ -141,22 +147,23 @@ bool init_window(worker_data *worker) {
 
 int main() {
 	srand(time(NULL));
-	worker_data *worker = (worker_data*)malloc(sizeof(worker_data));
+	worker = (worker_data*)malloc(sizeof(worker_data));
 	win *window = (win*)malloc(sizeof(win));
 	if (!worker || !window) exit(1);
 	memset(worker, 0, sizeof(worker_data));
 	memset(window, 0, sizeof(win));
 	worker->window = window;
 	if (!init_window(worker)) exit(1);
-	pthread_mutex_init(&worker->halt_mutex, NULL);
+	/*pthread_mutex_init(&worker->halt_mutex, NULL);
 	pthread_mutex_init(&worker->data_mutex, NULL);
-	pthread_mutex_init(&worker->indx_mutex, NULL);
-	pthread_create(&worker->worker, NULL, animation_routine, worker);
-	draw_routine(worker);
-	pthread_join(worker->worker, NULL);
+	pthread_mutex_init(&worker->indx_mutex, NULL);*/
+	//pthread_create(&worker->worker, NULL, animation_routine, worker);
+	emscripten_set_main_loop_arg(draw_routine, worker, 0, 1);
+	//draw_routine(worker);
+	/*pthread_join(worker->worker, NULL);
 	pthread_mutex_destroy(&worker->halt_mutex);
 	pthread_mutex_destroy(&worker->data_mutex);
-	pthread_mutex_destroy(&worker->indx_mutex);
+	pthread_mutex_destroy(&worker->indx_mutex);*/
 	SDL_DestroyTexture(worker->window->texture);
 	SDL_DestroyRenderer(worker->window->renderer);
 	SDL_DestroyWindow(worker->window->window);
