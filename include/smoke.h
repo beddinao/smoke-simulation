@@ -31,8 +31,6 @@
 #define RECT_MAX_HEIGHT	DEF_WIN_WIDTH/2
 #define Y_FIX_VELOCITY	5
 
-#define TEXTURE_PATH "assets/smoke_texture_3.png"
-
 typedef struct meta {
 	int16_t		angle;
 	int8_t		dir;
@@ -66,3 +64,5 @@ typedef struct worker {
 	pthread_mutex_t	indx_mutex;
 	win		*window;
 } worker_data;
+
+bool load_texture(worker_data*);

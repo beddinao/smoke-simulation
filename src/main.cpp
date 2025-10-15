@@ -134,14 +134,11 @@ bool init_window(worker_data *worker) {
 	SDL_SetWindowMinimumSize(sdl_win,
 			MIN_WIN_WIDTH,
 			MIN_WIN_HEIGHT);
-	SDL_SetRenderDrawBlendMode(worker->window->renderer, SDL_BLENDMODE_BLEND);	
-	SDL_Surface *surface = IMG_Load(TEXTURE_PATH);
-	if (!surface || !(worker->window->texture = SDL_CreateTextureFromSurface(
-			renderer, surface))) exit(1);
-	SDL_SetTextureBlendMode(worker->window->texture, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(worker->window->renderer, SDL_BLENDMODE_BLEND);
 	window->window = sdl_win;
 	window->renderer = renderer;
-	SDL_DestroySurface(surface);
+	if (!load_texture(worker))
+		exit(1);
 	return true;
 }
 
