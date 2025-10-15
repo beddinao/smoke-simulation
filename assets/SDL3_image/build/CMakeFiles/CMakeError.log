@@ -1,0 +1,35 @@
+Performing C SOURCE FILE Test LINKER_SUPPORTS_VERSION_SCRIPT failed with the following output:
+Change Dir: /goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bf41a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bf41a.dir/build.make CMakeFiles/cmTC_bf41a.dir/build
+gmake[1]: Entering directory '/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bf41a.dir/src.c.o
+/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/emcc -DLINKER_SUPPORTS_VERSION_SCRIPT   -MD -MT CMakeFiles/cmTC_bf41a.dir/src.c.o -MF CMakeFiles/cmTC_bf41a.dir/src.c.o.d -o CMakeFiles/cmTC_bf41a.dir/src.c.o -c /goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_bf41a.js
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bf41a.dir/link.txt --verbose=1
+/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/emcc -Wl,--version-script=/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/dummy.sym @CMakeFiles/cmTC_bf41a.dir/objects1.rsp -o cmTC_bf41a.js 
+emcc: warning: ignoring unsupported linker flag: `--version-script=/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/dummy.sym` [-Wlinkflags]
+gmake[1]: Leaving directory '/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int func(void) {return 0;} int main(int argc,char*argv[]){(void)argc;(void)argv;return func();}
+Performing C SOURCE FILE Test HAVE_WL_NO_UNDEFINED failed with the following output:
+Change Dir: /goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b877c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b877c.dir/build.make CMakeFiles/cmTC_b877c.dir/build
+gmake[1]: Entering directory '/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b877c.dir/src.c.o
+/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/emcc -DHAVE_WL_NO_UNDEFINED   -MD -MT CMakeFiles/cmTC_b877c.dir/src.c.o -MF CMakeFiles/cmTC_b877c.dir/src.c.o.d -o CMakeFiles/cmTC_b877c.dir/src.c.o -c /goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_b877c.js
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b877c.dir/link.txt --verbose=1
+/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/emcc -Wl,--no-undefined @CMakeFiles/cmTC_b877c.dir/objects1.rsp -o cmTC_b877c.js 
+wasm-ld: error: unknown argument: --no-undefined
+emcc: error: '/goinfre/beddinao/emscripten-ready/emsdk/upstream/bin/wasm-ld -o cmTC_b877c.wasm --no-undefined CMakeFiles/cmTC_b877c.dir/src.c.o -L/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten -L/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/src/lib -lGL-getprocaddr -lal -lhtml5 -lstubs-debug -lnoexit -lc-debug -ldlmalloc-debug -lcompiler_rt -lc++-debug-noexcept -lc++abi-debug-noexcept -lsockets -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr /tmp/tmp6efethbklibemscripten_js_symbols.so --strip-debug --export=emscripten_stack_get_end --export=emscripten_stack_get_free --export=emscripten_stack_get_base --export=emscripten_stack_get_current --export=emscripten_stack_init --export=_emscripten_stack_alloc --export=__wasm_call_ctors --export=_emscripten_stack_restore --export-if-defined=__start_em_asm --export-if-defined=__stop_em_asm --export-if-defined=__start_em_lib_deps --export-if-defined=__stop_em_lib_deps --export-if-defined=__start_em_js --export-if-defined=__stop_em_js --export-if-defined=main --export-if-defined=__main_argc_argv --export-if-defined=fflush --export-table -z stack-size=65536 --no-growable-memory --initial-heap=16777216 --no-entry --stack-first --table-base=1' failed (returned 1)
+gmake[1]: *** [CMakeFiles/cmTC_b877c.dir/build.make:101: cmTC_b877c.js] Error 1
+gmake[1]: Leaving directory '/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b877c/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }

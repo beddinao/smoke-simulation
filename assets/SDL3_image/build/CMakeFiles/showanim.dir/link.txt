@@ -1,0 +1,1 @@
+/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/emcc -O2 -g -DNDEBUG @CMakeFiles/showanim.dir/objects1.rsp -o showanim.js @CMakeFiles/showanim.dir/linklibs.rsp

@@ -1,6 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <math.h>
+#include <pthread.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <emscripten/emscripten.h>

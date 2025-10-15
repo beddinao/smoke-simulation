@@ -1,0 +1,1 @@
+-I/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/include -isystem /goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3/build/include-revision -isystem /goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3/include
