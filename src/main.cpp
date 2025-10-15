@@ -140,18 +140,38 @@ bool init_window(worker_data *worker) {
 }
 
 int main() {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	worker_data *worker = (worker_data*)malloc(sizeof(worker_data));
 	win *window = (win*)malloc(sizeof(win));
-	if (!worker || !window) exit(1);
+	if (!worker || !window) {
+		free(worker);
+		free(window);
+		exit(1);
+	}
 	memset(worker, 0, sizeof(worker_data));
 	memset(window, 0, sizeof(win));
 	worker->window = window;
-	if (!init_window(worker)) exit(1);
+	if (!init_window(worker)) {
+		free(window);
+		free(worker);
+		exit(1);
+	}
 	pthread_mutex_init(&worker->halt_mutex, NULL);
 	pthread_mutex_init(&worker->data_mutex, NULL);
 	pthread_mutex_init(&worker->indx_mutex, NULL);
-	pthread_create(&worker->worker, NULL, animation_routine, worker);
+
+	int pthread_err = pthread_create(&worker->worker, NULL, animation_routine, worker);
+	if (pthread_err != 0) {
+		fprintf(stderr, "pthread_create failed: %s\n", strerror(pthread_err));
+		SDL_DestroyTexture(worker->window->texture);
+		SDL_DestroyRenderer(worker->window->renderer);
+		SDL_DestroyWindow(worker->window->window);
+		SDL_Quit();
+		free(worker->window);
+		free(worker);
+		exit(1);
+	}
+
 	draw_routine(worker);
 	pthread_join(worker->worker, NULL);
 	pthread_mutex_destroy(&worker->halt_mutex);
@@ -164,3 +184,4 @@ int main() {
 	free(worker->window);
 	free(worker);
 }
+
