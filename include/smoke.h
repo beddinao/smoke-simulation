@@ -21,8 +21,8 @@
 #define MIN_WIN_HEIGHT	0x64
 #define MIN_ALPHA_INDX	3
 #define MAX_ALPHA_INDX	10
-#define VELOCITY_X_INDX	0.005
-#define VELOCITY_Y_INDX	0.001
+#define VELOCITY_X_INDX	0.5
+#define VELOCITY_Y_INDX	0.1
 #define MAX_SCALE_X_INDX	20
 #define MAX_SCALE_Y_INDX	20
 #define MIN_SCALE_X_INDX	10
@@ -52,7 +52,7 @@ typedef struct graphic {
 	float		velosY[MAX_RECTS];
 	SDL_Texture	*texture;	
 	bool		mouse_active;
-	Uint8		mouse_iter;
+	Uint32		cur_rects;
 	Uint32		rIndex;
 } win;
 
