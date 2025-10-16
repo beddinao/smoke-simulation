@@ -65,13 +65,13 @@ a {
 
 body > div {
 	height: auto;
-	width: 80%;
 	display: flex;
 	flex-direction: column;
 	row-gap: var(--gap-1);
 }
 
 body > div:nth-child(1) {
+	width: 100%;
 	height: auto;
 }
 
@@ -162,7 +162,7 @@ body > div > div:nth-child(4) > div:nth-child(4) {
 
 textarea {
 	color: var(--color-1);
-	background: var(--background-1);
+	background: var(--background-2);
 	border: 1px solid var(--border-2);
 	font-size: 15px;
 }
@@ -174,17 +174,19 @@ textarea {
 body > div:nth-child(2) {
 	flex-direction: row;
 	column-gap: var(--gap-1);
-	width: 90%;
+	width: 50%;
 	height: auto;
 	max-height: 70%;
 }
 
 canvas {
-	width: 70%;
+	width: 100%;
 	max-height: 70vh;
+	border: 1px solid var(--border-1);
+	background: var(--background-1)
 }
 
-@media screen and (max-width: 1300px), screen and (max-height: 900px) {
+@media screen and (max-width: 900px), screen and (max-height: 700px) {
 	body > div:nth-child(2) {
 		flex-direction: column;
 		width: 100%;

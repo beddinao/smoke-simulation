@@ -16,10 +16,22 @@
 				<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 			</div>
 			<script async type="text/javascript" src="./assets/smoke.js"></script>
+			<div>
+				<p class="text_1" style="font-size: 16px;">web smoke simulation</p>
+				<div>
+					<a href="https://github.com/beddinao/smoke-simulation" target="_blank"><p class="text_1" style="font-size: 13px;">Original C Project</p></a>
+				</div>
+			</div>
 			<script async type="text/javascript">
+				var header_output_elem = document.getElementById("header_console");
+				window.onload = e => {
+					if (header_output_elem) header_output_elem.value = "";
+				}
 				var Module = {
 					print(...args) {
-						console.log(args);
+						var text = args.join(' ');
+						header_output_elem.value += " " + text + "\n";
+						header_output_elem.rows += 1;
 					},
 					onRuntimeInitialized: function() {
 						const load_texture_web = Module.cwrap('load_texture_web', null, ['array', 'number']);
