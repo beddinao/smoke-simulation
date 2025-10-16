@@ -3,7 +3,6 @@
 extern worker_data *worker;
 
 void load_texture_web(uint8_t *texture_png, size_t texture_png_len) {
-	printf("got len: %zu\n", texture_png_len);
 	if (worker->window->texture != NULL) {
 		printf("texture already loaded\n");
 		return;

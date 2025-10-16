@@ -114,6 +114,13 @@ bool init_window(worker_data *worker) {
 	SDL_SetRenderDrawBlendMode(worker->window->renderer, SDL_BLENDMODE_BLEND);
 	window->window = sdl_win;
 	window->renderer = renderer;
+printf("                     _              _                 _       _   _\n");
+printf("                    | |            (_)               | |     | | (_)\n");
+printf(" ___ _ __ ___   ___ | | _____   ___ _ _ __ ___  _   _| | __ _| |_ _  ___  _ __\n");
+printf("/ __| '_ ` _ \\ / _ \\| |/ / _ \\ / __| | '_ ` _ \\| | | | |/ _` | __| |/ _ \\| '_ \\\n");
+printf("\\__ \\ | | | | | (_) |   <  __/ \\__ \\ | | | | | | |_| | | (_| | |_| | (_) | | | |\n");
+printf("|___/_| |_| |_|\\___/|_|\\_\\___| |___/_|_| |_| |_|\\__,_|_|\\__,_|\\__|_|\\___/|_| |_|\n");
+
 	return 1;
 }
 
