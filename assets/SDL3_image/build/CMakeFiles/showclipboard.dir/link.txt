@@ -1,1 +1,1 @@
-/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/emcc -O2 -g -DNDEBUG @CMakeFiles/showclipboard.dir/objects1.rsp -o showclipboard.js @CMakeFiles/showclipboard.dir/linklibs.rsp
+/root/emsdk/upstream/emscripten/emcc -O2 -g -DNDEBUG @CMakeFiles/showclipboard.dir/objects1.rsp -o showclipboard.js @CMakeFiles/showclipboard.dir/linkLibs.rsp

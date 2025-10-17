@@ -1,4 +1,4 @@
-prefix=/goinfre/beddinao/emscripten-ready/emsdk/upstream/emscripten/cache/sysroot
+prefix=/root/emsdk/upstream/emscripten/cache/sysroot
 exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include

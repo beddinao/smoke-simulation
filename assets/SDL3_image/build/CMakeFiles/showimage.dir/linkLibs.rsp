@@ -1,0 +1,1 @@
+ libSDL3_image.a "/root/smoke-simulation/assets/SDL3/build/libSDL3.a" -lm 

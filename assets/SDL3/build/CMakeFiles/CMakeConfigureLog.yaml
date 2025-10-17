@@ -1,0 +1,210 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:199 (message)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      The target system is: Emscripten - 1 - x86
+      The host system is: Linux - 5.14.0-570.41.1.el9_6.x86_64 - x86_64
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "cmake/sdlcpu.cmake:93 (try_compile)"
+      - "CMakeLists.txt:81 (SDL_DetectTargetCPUArchitectures)"
+    directories:
+      source: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeTmp/SDL_detect_arch/CMakeFiles/CMakeTmp"
+      binary: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeTmp/SDL_detect_arch/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/smoke-simulation/assets/SDL3/cmake"
+    buildResult:
+      variable: "SDL_CPU_CHECK_ALL"
+      cached: true
+      stdout: |
+        Change Dir: /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeTmp/SDL_detect_arch/CMakeFiles/CMakeTmp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fbb5e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fbb5e.dir/build.make CMakeFiles/cmTC_fbb5e.dir/build
+        gmake[1]: Entering directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeTmp/SDL_detect_arch/CMakeFiles/CMakeTmp'
+        Building C object CMakeFiles/cmTC_fbb5e.dir/SDL_detect_arch.c.o
+        /root/emsdk/upstream/emscripten/emcc    -MD -MT CMakeFiles/cmTC_fbb5e.dir/SDL_detect_arch.c.o -MF CMakeFiles/cmTC_fbb5e.dir/SDL_detect_arch.c.o.d -o CMakeFiles/cmTC_fbb5e.dir/SDL_detect_arch.c.o -c /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeTmp/SDL_detect_arch.c
+        shared:INFO: (Emscripten: Running sanity checks)
+        Linking C static library libcmTC_fbb5e.a
+        /usr/bin/cmake -P CMakeFiles/cmTC_fbb5e.dir/cmake_clean_target.cmake
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fbb5e.dir/link.txt --verbose=1
+        /root/emsdk/upstream/emscripten/emar qc libcmTC_fbb5e.a CMakeFiles/cmTC_fbb5e.dir/SDL_detect_arch.c.o
+        /root/emsdk/upstream/emscripten/emranlib libcmTC_fbb5e.a
+        gmake[1]: Leaving directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeTmp/SDL_detect_arch/CMakeFiles/CMakeTmp'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/CheckCCompilerFlag.cmake:40 (cmake_check_compiler_flag)"
+      - "cmake/sdlcompilers.cmake:152 (check_c_compiler_flag)"
+      - "CMakeLists.txt:447 (SDL_AddCommonCompilerFlags)"
+    checks:
+      - "Performing Test COMPILER_SUPPORTS_FCOLOR_DIAGNOSTICS"
+    directories:
+      source: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-YGhfo1"
+      binary: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-YGhfo1"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/smoke-simulation/assets/SDL3/cmake"
+    buildResult:
+      variable: "COMPILER_SUPPORTS_FCOLOR_DIAGNOSTICS"
+      cached: true
+      stdout: |
+        Change Dir: /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-YGhfo1
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4c5d8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_4c5d8.dir/build.make CMakeFiles/cmTC_4c5d8.dir/build
+        gmake[1]: Entering directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-YGhfo1'
+        Building C object CMakeFiles/cmTC_4c5d8.dir/src.c.o
+        /root/emsdk/upstream/emscripten/emcc -DCOMPILER_SUPPORTS_FCOLOR_DIAGNOSTICS  -D_GNU_SOURCE=1   -fcolor-diagnostics -MD -MT CMakeFiles/cmTC_4c5d8.dir/src.c.o -MF CMakeFiles/cmTC_4c5d8.dir/src.c.o.d -o CMakeFiles/cmTC_4c5d8.dir/src.c.o -c /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-YGhfo1/src.c
+        Linking C executable cmTC_4c5d8.js
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4c5d8.dir/link.txt --verbose=1
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 @CMakeFiles/cmTC_4c5d8.dir/objects1.rsp -o cmTC_4c5d8.js 
+        gmake[1]: Leaving directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-YGhfo1'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:145 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:71 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "CMakeLists.txt:1100 (check_symbol_exists)"
+    checks:
+      - "Looking for fdatasync"
+    directories:
+      source: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-b9GM57"
+      binary: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-b9GM57"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/smoke-simulation/assets/SDL3/cmake"
+    buildResult:
+      variable: "HAVE_FDATASYNC"
+      cached: true
+      stdout: |
+        Change Dir: /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-b9GM57
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_864e8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_864e8.dir/build.make CMakeFiles/cmTC_864e8.dir/build
+        gmake[1]: Entering directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-b9GM57'
+        Building C object CMakeFiles/cmTC_864e8.dir/CheckSymbolExists.c.o
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_864e8.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_864e8.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_864e8.dir/CheckSymbolExists.c.o -c /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-b9GM57/CheckSymbolExists.c
+        Linking C executable cmTC_864e8.js
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_864e8.dir/link.txt --verbose=1
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 @CMakeFiles/cmTC_864e8.dir/objects1.rsp -o cmTC_864e8.js 
+        gmake[1]: Leaving directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-b9GM57'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:145 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:71 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "CMakeLists.txt:1101 (check_symbol_exists)"
+    checks:
+      - "Looking for gethostname"
+    directories:
+      source: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-FIgZ9D"
+      binary: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-FIgZ9D"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/smoke-simulation/assets/SDL3/cmake"
+    buildResult:
+      variable: "HAVE_GETHOSTNAME"
+      cached: true
+      stdout: |
+        Change Dir: /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-FIgZ9D
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_21378/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_21378.dir/build.make CMakeFiles/cmTC_21378.dir/build
+        gmake[1]: Entering directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-FIgZ9D'
+        Building C object CMakeFiles/cmTC_21378.dir/CheckSymbolExists.c.o
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_21378.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_21378.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_21378.dir/CheckSymbolExists.c.o -c /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-FIgZ9D/CheckSymbolExists.c
+        Linking C executable cmTC_21378.js
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_21378.dir/link.txt --verbose=1
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 @CMakeFiles/cmTC_21378.dir/objects1.rsp -o cmTC_21378.js 
+        gmake[1]: Leaving directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-FIgZ9D'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:145 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckSymbolExists.cmake:71 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "CMakeLists.txt:1104 (check_symbol_exists)"
+    checks:
+      - "Looking for sigtimedwait"
+    directories:
+      source: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-qoHSy2"
+      binary: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-qoHSy2"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/smoke-simulation/assets/SDL3/cmake"
+    buildResult:
+      variable: "HAVE_SIGTIMEDWAIT"
+      cached: true
+      stdout: |
+        Change Dir: /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-qoHSy2
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a0e54/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a0e54.dir/build.make CMakeFiles/cmTC_a0e54.dir/build
+        gmake[1]: Entering directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-qoHSy2'
+        Building C object CMakeFiles/cmTC_a0e54.dir/CheckSymbolExists.c.o
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_a0e54.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_a0e54.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_a0e54.dir/CheckSymbolExists.c.o -c /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-qoHSy2/CheckSymbolExists.c
+        Linking C executable cmTC_a0e54.js
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a0e54.dir/link.txt --verbose=1
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 @CMakeFiles/cmTC_a0e54.dir/objects1.rsp -o cmTC_a0e54.js 
+        gmake[1]: Leaving directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-qoHSy2'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "CMakeLists.txt:2967 (check_c_source_compiles)"
+    checks:
+      - "Performing Test HAVE_POSIX_SPAWN"
+    directories:
+      source: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-xhGGxR"
+      binary: "/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-xhGGxR"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/emsdk/upstream/emscripten/cmake/Modules;/root/smoke-simulation/assets/SDL3/cmake"
+    buildResult:
+      variable: "HAVE_POSIX_SPAWN"
+      cached: true
+      stdout: |
+        Change Dir: /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-xhGGxR
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_62df5/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_62df5.dir/build.make CMakeFiles/cmTC_62df5.dir/build
+        gmake[1]: Entering directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-xhGGxR'
+        Building C object CMakeFiles/cmTC_62df5.dir/src.c.o
+        /root/emsdk/upstream/emscripten/emcc -DHAVE_POSIX_SPAWN  -D_GNU_SOURCE=1 -MD -MT CMakeFiles/cmTC_62df5.dir/src.c.o -MF CMakeFiles/cmTC_62df5.dir/src.c.o.d -o CMakeFiles/cmTC_62df5.dir/src.c.o -c /root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-xhGGxR/src.c
+        Linking C executable cmTC_62df5.js
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62df5.dir/link.txt --verbose=1
+        /root/emsdk/upstream/emscripten/emcc   -D_GNU_SOURCE=1 @CMakeFiles/cmTC_62df5.dir/objects1.rsp -o cmTC_62df5.js 
+        wasm-ld: error: CMakeFiles/cmTC_62df5.dir/src.c.o: undefined symbol: posix_spawnp
+        emcc: error: '/root/emsdk/upstream/bin/wasm-ld -o cmTC_62df5.wasm CMakeFiles/cmTC_62df5.dir/src.c.o -L/root/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten -L/root/emsdk/upstream/emscripten/src/lib -lGL-getprocaddr -lal -lhtml5 -lstubs-debug -lnoexit -lc-debug -ldlmalloc-debug -lcompiler_rt -lc++-debug-noexcept -lc++abi-debug-noexcept -lsockets -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr /tmp/tmpa8fs38oslibemscripten_js_symbols.so --strip-debug --export=emscripten_stack_get_end --export=emscripten_stack_get_free --export=emscripten_stack_get_base --export=emscripten_stack_get_current --export=emscripten_stack_init --export=_emscripten_stack_alloc --export=__wasm_call_ctors --export=_emscripten_stack_restore --export-if-defined=__start_em_asm --export-if-defined=__stop_em_asm --export-if-defined=__start_em_lib_deps --export-if-defined=__stop_em_lib_deps --export-if-defined=__start_em_js --export-if-defined=__stop_em_js --export-if-defined=main --export-if-defined=__main_argc_argv --export-if-defined=fflush --export-table -z stack-size=65536 --no-growable-memory --initial-heap=16777216 --no-entry --stack-first --table-base=1' failed (returned 1)
+        gmake[1]: *** [CMakeFiles/cmTC_62df5.dir/build.make:101: cmTC_62df5.js] Error 1
+        gmake[1]: Leaving directory '/root/smoke-simulation/assets/SDL3/build/CMakeFiles/CMakeScratch/TryCompile-xhGGxR'
+        gmake: *** [Makefile:127: cmTC_62df5/fast] Error 2
+        
+      exitCode: 2
+...

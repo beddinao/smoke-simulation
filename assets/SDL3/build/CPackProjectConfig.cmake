@@ -2,7 +2,7 @@ if(CPACK_PACKAGE_FILE_NAME MATCHES ".*-src$")
     message(FATAL_ERROR "Creating source archives for SDL 3.2.24 is not supported.")
 endif()
 
-set(PROJECT_SOURCE_DIR "/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3")
+set(PROJECT_SOURCE_DIR "/root/smoke-simulation/assets/SDL3")
 set(SDL_CMAKE_PLATFORM "Emscripten")
 set(SDL_CPU_NAMES "")
 list(SORT SDL_CPU_NAMES)

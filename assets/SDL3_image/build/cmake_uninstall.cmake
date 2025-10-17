@@ -1,8 +1,8 @@
-if (NOT EXISTS "/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/install_manifest.txt\"")
+if (NOT EXISTS "/root/smoke-simulation/assets/SDL3_image/build/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/root/smoke-simulation/assets/SDL3_image/build/install_manifest.txt\"")
 endif()
 
-file(READ "/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image/build/install_manifest.txt" files)
+file(READ "/root/smoke-simulation/assets/SDL3_image/build/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
     message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")

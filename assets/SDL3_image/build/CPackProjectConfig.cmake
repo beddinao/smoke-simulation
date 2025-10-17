@@ -4,7 +4,7 @@ endif()
 
 set(PROJECT_NAME "SDL3_image")
 set(PROJECT_VERSION "3.3.0")
-set(PROJECT_SOURCE_DIR "/goinfre/beddinao/emscripten-ready/smoke-simulation/assets/SDL3_image")
+set(PROJECT_SOURCE_DIR "/root/smoke-simulation/assets/SDL3_image")
 set(SDL_CMAKE_PLATFORM "Emscripten")
 set(SDL_CPU_NAMES "EMSCRIPTEN")
 list(SORT SDL_CPU_NAMES)
