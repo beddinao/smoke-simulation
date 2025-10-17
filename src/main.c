@@ -23,10 +23,10 @@ void *animation_routine(void *p) {
 		for (Uint32 current_rect = 0; current_rect < worker->window->cur_rects; current_rect++) {
 			worker->window->rects[current_rect].x += worker->window->velosX[current_rect];
 			worker->window->rects[current_rect].y += worker->window->velosY[current_rect] -Y_FIX_VELOCITY;
-			if (abs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
+			if (fabs(worker->window->velosX[current_rect]) >= VELOCITY_X_INDX)
 				worker->window->velosX[current_rect] -= VELOCITY_X_INDX*(worker->window->velosX[current_rect]>0?1:-1);
 			else	worker->window->velosX[current_rect] = 0;
-			if (abs(worker->window->velosY[current_rect]) >= VELOCITY_Y_INDX)
+			if (fabs(worker->window->velosY[current_rect]) >= VELOCITY_Y_INDX)
 				worker->window->velosY[current_rect] -= VELOCITY_Y_INDX*(worker->window->velosY[current_rect]>0?1:-1);
 			else	worker->window->velosY[current_rect] = 0;
 			if (worker->window->rects[current_rect].w<=RECT_MAX_WIDTH) {
@@ -48,7 +48,7 @@ void *animation_routine(void *p) {
 	return NULL;
 }
 
-int16_t random(int16_t min, int16_t max) { return (rand() % (max - min + 1)) + min; }
+int16_t a_random(int16_t min, int16_t max) { return (rand() % (max - min + 1)) + min; }
 
 void draw_routine(worker_data*worker) {
 	struct timespec frame_start_time, frame_end_time;
@@ -59,29 +59,29 @@ void draw_routine(worker_data*worker) {
 		if (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_EVENT_QUIT:
-					std::cout << "SDL_Quit success" << std::endl;
+					printf("SDL_Quit Success\n");
 					pthread_mutex_lock(&worker->halt_mutex);
-					worker->halt = true;
+					worker->halt = 1;
 					pthread_mutex_unlock(&worker->halt_mutex);
 					return;
 				case SDL_EVENT_MOUSE_BUTTON_UP:
-					worker->window->mouse_active = false; break;
+					worker->window->mouse_active = 0; break;
 				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-					worker->window->mouse_active = true;
+					worker->window->mouse_active = 1;
 					break;
 				case SDL_EVENT_MOUSE_MOTION:
 					if (worker->window->mouse_active) {
-						worker->window->meta[worker->window->rIndex].angle = random(0, 360);
-						worker->window->meta[worker->window->rIndex].dir = random(0, 1) ? 1 : -1;
-						worker->window->meta[worker->window->rIndex].indx = random(1, 2);
-						worker->window->meta[worker->window->rIndex].scale_x = random(MIN_SCALE_X_INDX, MAX_SCALE_X_INDX);
+						worker->window->meta[worker->window->rIndex].angle = a_random(0, 360);
+						worker->window->meta[worker->window->rIndex].dir = a_random(0, 1) ? 1 : -1;
+						worker->window->meta[worker->window->rIndex].indx = a_random(1, 2);
+						worker->window->meta[worker->window->rIndex].scale_x = a_random(MIN_SCALE_X_INDX, MAX_SCALE_X_INDX);
 						worker->window->meta[worker->window->rIndex].scale_y = worker->window->meta[worker->window->rIndex].scale_x;
-						worker->window->meta[worker->window->rIndex].alpha_indx = random(MIN_ALPHA_INDX, MAX_ALPHA_INDX);
-						worker->window->velosX[worker->window->rIndex] = random(0, 10);
-						worker->window->velosY[worker->window->rIndex] = random(0, 10);
-						worker->window->alphas[worker->window->rIndex] = random(0x64, 0xff);
-						worker->window->rects[worker->window->rIndex].w = random(DEF_RECT_WIDTH-10,DEF_RECT_WIDTH);
-						worker->window->rects[worker->window->rIndex].h = random(DEF_RECT_HEIGHT-10,DEF_RECT_HEIGHT);
+						worker->window->meta[worker->window->rIndex].alpha_indx = a_random(MIN_ALPHA_INDX, MAX_ALPHA_INDX);
+						worker->window->velosX[worker->window->rIndex] = a_random(0, 10);
+						worker->window->velosY[worker->window->rIndex] = a_random(0, 10);
+						worker->window->alphas[worker->window->rIndex] = a_random(0x64, 0xff);
+						worker->window->rects[worker->window->rIndex].w = a_random(DEF_RECT_WIDTH-10,DEF_RECT_WIDTH);
+						worker->window->rects[worker->window->rIndex].h = a_random(DEF_RECT_HEIGHT-10,DEF_RECT_HEIGHT);
 						worker->window->rects[worker->window->rIndex].x = event.motion.x-worker->window->rects[worker->window->rIndex].w/2;
 						worker->window->rects[worker->window->rIndex].y = event.motion.y-worker->window->rects[worker->window->rIndex].h/2;
 						pthread_mutex_lock(&worker->data_mutex);
@@ -122,12 +122,12 @@ bool init_window(worker_data *worker) {
 	window->win_height = DEF_WIN_HEIGHT;
 	window->win_width = DEF_WIN_WIDTH;
 	if (!SDL_Init(SDL_INIT_EVENTS))
-		return false;
+		return 0;
 	sdl_win = SDL_CreateWindow("smoking",
 			window->win_width,
 			window->win_height, 0);
 	renderer = SDL_CreateRenderer(sdl_win, NULL);
-	if (!sdl_win || !renderer) return false;
+	if (!sdl_win || !renderer) return 0;
 	SDL_SetWindowMinimumSize(sdl_win,
 			MIN_WIN_WIDTH,
 			MIN_WIN_HEIGHT);
@@ -136,7 +136,7 @@ bool init_window(worker_data *worker) {
 	window->renderer = renderer;
 	if (!load_texture(worker))
 		exit(1);
-	return true;
+	return 1;
 }
 
 int main() {

@@ -1,6 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <math.h>
+#include <pthread.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <SDL3_image/SDL_image.h>
@@ -19,8 +21,8 @@
 #define DEF_WIN_HEIGHT	0x280
 #define MIN_WIN_WIDTH	0xc8
 #define MIN_WIN_HEIGHT	0x64
-#define MIN_ALPHA_INDX	3
-#define MAX_ALPHA_INDX	10
+#define MIN_ALPHA_INDX	6
+#define MAX_ALPHA_INDX	15
 #define VELOCITY_X_INDX	0.5
 #define VELOCITY_Y_INDX	0.1
 #define MAX_SCALE_X_INDX	20
